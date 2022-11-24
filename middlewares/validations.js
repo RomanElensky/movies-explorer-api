@@ -1,6 +1,5 @@
 const validator = require('validator');
 const { celebrate, Joi } = require('celebrate');
-const { incorrectUrl } = require('../utils/constants');
 
 module.exports.loginUserValidation = celebrate({
   body: Joi.object().keys({
@@ -35,19 +34,19 @@ module.exports.createMovieValidation = celebrate({
       if (validator.isURL(value)) {
         return value;
       }
-      return helpers.message(incorrectUrl);
+      return helpers.message('Переданы некоректные данные');
     }),
     trailerLink: Joi.string().required().custom((value, helpers) => {
       if (validator.isURL(value)) {
         return value;
       }
-      return helpers.message(incorrectUrl);
+      return helpers.message('Переданы некоректные данные');
     }),
     thumbnail: Joi.string().required().custom((value, helpers) => {
       if (validator.isURL(value)) {
         return value;
       }
-      return helpers.message(incorrectUrl);
+      return helpers.message('Переданы некоректные данные');
     }),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),

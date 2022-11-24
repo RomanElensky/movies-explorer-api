@@ -11,10 +11,31 @@ module.exports.getSavedMovies = (req, res, next) => {
 
 module.exports.createMovie = (req, res, next) => {
   const {
-    country, director, duration, year, description, image, trailerLink, thumbnail, movieId, nameRU, nameEN,
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
   } = req.body;
   Movie.create({
-    country, director, duration, year, description, image, trailerLink, thumbnail, movieId, nameRU, nameEN, owner: req.user._id,
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+    owner: req.user._id,
   })
     .then((movie) => {
       res.send(movie);
@@ -38,7 +59,7 @@ module.exports.deleteMovie = (req, res, next) => {
         return next(new ForbiddenError('Нет доступа'));
       }
       return Movie.findByIdAndRemove(req.params.movieId)
-        .then((movieItem) => res.send({ data: movieItem, message: movieDeleteFromSaved }));
+        .then((movieItem) => res.send({ data: movieItem, message: 'Фильм удален' }));
     })
     .catch((err) => {
       if (err.name === 'CastError') {

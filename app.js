@@ -18,18 +18,18 @@ const limiter = require('./middlewares/limiter');
 
 const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/moviesdb' } = process.env;
 
+const corsOptions = {
+  origin: '*',
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
 app.use(router);
 
 app.use(express.json());
 
 app.use(cors());
 app.use(cors(corsOptions));
-
-module.exports.corsOptions = {
-  origin: '*',
-  credentials: true,
-  optionSuccessStatus: 200,
-};
 
 app.use(helmet());
 
@@ -41,8 +41,6 @@ app.use(errorLogger);
 app.use(requestLogger);
 
 app.use(errors());
-
-app.use(errorHandler);
 
 module.exports = { PORT, MONGO_URL };
 
