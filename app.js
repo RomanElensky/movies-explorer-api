@@ -24,6 +24,9 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
+app.use(requestLogger);
+app.use(errorLogger);
+
 app.use(router);
 
 app.use(express.json());
@@ -36,9 +39,6 @@ app.use(helmet());
 app.use(limiter);
 
 app.use(cookieParser());
-
-app.use(errorLogger);
-app.use(requestLogger);
 
 app.use(errors());
 
