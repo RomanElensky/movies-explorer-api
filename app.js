@@ -13,6 +13,7 @@ const { errors } = require('celebrate');
 const helmet = require('helmet');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+
 const router = require('./routes/routes');
 const limiter = require('./middlewares/limiter');
 
@@ -24,28 +25,29 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-app.use(router);
-
-app.use(express.json());
-
-app.use(cors());
 app.use(cors(corsOptions));
-
-app.use(helmet());
-
-app.use(limiter);
+app.use(cors());
 
 app.use(cookieParser());
 
-app.use(errorLogger);
+app.use(express.json());
+
 app.use(requestLogger);
 
-app.use(errors());
+app.use(limiter);
 
-module.exports = { PORT, MONGO_URL };
+app.use(helmet());
+
+app.use(router);
+
+app.use(errorLogger);
+
+app.use(errors());
 
 mongoose.connect(MONGO_URL, { useNewUrlParser: true });
 
 app.listen(PORT, () => {
   console.log(`Подключен к порту ${PORT}`);
 });
+
+module.exports = { PORT, MONGO_URL };
