@@ -51,10 +51,10 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.updateUserProfile = (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
-    { name, about },
+    { name, email },
     {
       new: true,
       runValidators: true,
@@ -67,8 +67,10 @@ module.exports.updateUserProfile = (req, res, next) => {
       return res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === ('ValidationError' || 'CastError')) {
         next(new BadRequestError('Переданы некорректные данные'));
+      } else if (err.code === 11000) {
+        next(new ConflictError('Данный email уже зарегестрирован'));
       } else {
         next(err);
       }
