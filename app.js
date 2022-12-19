@@ -19,7 +19,7 @@ const limiter = require('./middlewares/limiter');
 
 const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/moviesdb' } = process.env;
 
-console.log(ok);
+console.log('ok');
 
 const corsOptions = {
   origin: '*',
